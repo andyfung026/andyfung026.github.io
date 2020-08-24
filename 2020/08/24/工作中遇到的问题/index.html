@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | 安迪冯的博客</title>
+  <title>工作中遇到的问题 | 安迪冯的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="安迪冯的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="实践与观察才是王道！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工作中遇到的问题">
+<meta property="og:url" content="http://yoursite.com/2020/08/24/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="安迪冯的博客">
+<meta property="og:description" content="实践与观察才是王道！">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-24T15:32:31.446Z">
+<meta property="article:modified_time" content="2020-08-24T16:09:29.373Z">
 <meta property="article:author" content="AndyFung">
+<meta property="article:tag" content="耐得住性子学习">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="安迪冯的博客" type="application/atom+xml">
@@ -155,36 +160,132 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-工作中遇到的问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/24/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-08-24T15:32:31.446Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-24</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/24/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">工作中遇到的问题</a>
+    <h1 class="article-title" itemprop="name">
+      工作中遇到的问题
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/08/24/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-08-24T15:32:31.446Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>实践与观察才是王道！</p>
+<a id="more"></a>
+
+<h3 id="多会一个知识，少写一行代码！"><a href="#多会一个知识，少写一行代码！" class="headerlink" title="多会一个知识，少写一行代码！"></a>多会一个知识，少写一行代码！</h3><h5 id="1-统计月份中资金的总和-amount总数大于30000-00-，status-2"><a href="#1-统计月份中资金的总和-amount总数大于30000-00-，status-2" class="headerlink" title="1:)统计月份中资金的总和 amount总数大于30000.00 ，status=2"></a>1:)统计月份中资金的总和 amount总数大于30000.00 ，status=2</h5><p>mapper.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT u.user_code as code, u.user_name as name, u.id_number, u.phone, u.bank_account,  o.id, o.status, o.agent_id, o.agent_code, o.agent_name,o.merchant_code, sum(o.amount) as amount, DATE_FORMAT(o.create_time,&#39;%Y-%m&#39;) AS month</span><br><span class="line">      FROM tap_order as o</span><br><span class="line">      LEFT JOIN tap_agent_user as u</span><br><span class="line">      ON o.user_code&#x3D;u.user_code</span><br><span class="line">      WHERE o.status&#x3D;2 and o.create_time &gt;&#x3D; #&#123;createTimeStart&#125; and o.create_time &lt; #&#123;createTimeEnd&#125;</span><br><span class="line">      group by o.user_code having amount &gt;&#x3D; #&#123;amountLimit&#125;</span><br></pre></td></tr></table></figure>
+<p>serviceImpl</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public ServiceResult&lt;IPage&lt;PeopleFindUserVO&gt;&gt; peopleFind(IPage&lt;PeopleFindUserVO&gt; page, UserQueryParams params) &#123;</span><br><span class="line">        DateTimeFormatter formatter&#x3D;DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span><br><span class="line">        LocalDateTime queryMonth &#x3D; LocalDateTime.parse(params.getStartTime()+&quot;-01 00:00&quot;,formatter);</span><br><span class="line">        </span><br><span class="line">        LocalDateTime createTimeStart &#x3D; queryMonth.with(TemporalAdjusters.firstDayOfMonth());</span><br><span class="line">        LocalDateTime createTimeEnd &#x3D; queryMonth.plusMonths(1).with(TemporalAdjusters.firstDayOfMonth());</span><br><span class="line">        Long amountLimit &#x3D; 3000000L;</span><br><span class="line">        return ServiceResult.ok(baseMapper.selectByPeopleFindPage(page, amountLimit, createTimeStart, createTimeEnd));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-字符串的拼接"><a href="#2-字符串的拼接" class="headerlink" title="2:) 字符串的拼接"></a>2:) 字符串的拼接</h5><p>例： String str = 8000000;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String amount &#x3D; item.getAmount().toString();</span><br><span class="line">String result &#x3D; amount.substring(0,amount.length()-2)+&quot;.&quot;+amount.substring(amount.length()-2);</span><br></pre></td></tr></table></figure>
+<p>效果：String result = 80000.00</p>
+<h5 id="3-获取当前年和月和日"><a href="#3-获取当前年和月和日" class="headerlink" title="3:)获取当前年和月和日"></a>3:)获取当前年和月和日</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Calendar instance &#x3D; Calendar.getInstance();</span><br><span class="line">int year &#x3D; instance.get(Calendar.YEAR);</span><br><span class="line">int month &#x3D; instance.get(Calendar.MONTH)+1;</span><br><span class="line">int day &#x3D; instance.get(Calendar.DAY_OF_MONTH);</span><br></pre></td></tr></table></figure>
+
+<label style="color:pink">
+注：月份这里默认是0-11月，所以要加上1
+</label>
+
+<h5 id="3-对象的Copy"><a href="#3-对象的Copy" class="headerlink" title="3:) 对象的Copy"></a>3:) 对象的Copy</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public ResponseEntity exportTemporytockInfo(TemporyStockInfoQueryRequest request)&#123;</span><br><span class="line">    Student s &#x3D; new Student();</span><br><span class="line">    &#x2F;&#x2F;把request对象中的属性值拷贝到s对象中</span><br><span class="line">    BeanUtils.copyProperties(request,s);</span><br><span class="line">    return ResponseEntity.ok();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-在mapper文件中使用注解的方式写SQL"><a href="#4-在mapper文件中使用注解的方式写SQL" class="headerlink" title="4:) 在mapper文件中使用注解的方式写SQL"></a>4:) 在mapper文件中使用注解的方式写SQL</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Update(&quot;UPDATE TAP_AGENTSET remain_amount&#x3D;remain_amount-(monthly_limit-#&#123;agentLimit&#125;)  ,monthly_limit&#x3D;#&#123;agentLimit&#125; WHERE id &#x3D;#&#123;agentId&#125;&quot;)</span><br><span class="line">int setRemainAmount(@Param(&quot;agentLimit&quot; long agentLimit ,@Param(&quot;agentId&quot;) Long agentId);</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-查询前一天SQL语句"><a href="#5-查询前一天SQL语句" class="headerlink" title="5:) 查询前一天SQL语句"></a>5:) 查询前一天SQL语句</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from tap_recharge_order </span><br><span class="line">where  date(accounting_time) &#x3D; DATE_SUB(curdate(),interval 1 day)</span><br></pre></td></tr></table></figure>
+<label style="color:pink">
+注：MySql数据库
+</label>
+
+<h5 id="6-获取当天从0点到24点的数据，条件是状态和2020-08-04日期格式的条件查询，查询04号当天的所有数据"><a href="#6-获取当天从0点到24点的数据，条件是状态和2020-08-04日期格式的条件查询，查询04号当天的所有数据" class="headerlink" title="6:)获取当天从0点到24点的数据，条件是状态和2020-08-04日期格式的条件查询，查询04号当天的所有数据"></a>6:)获取当天从0点到24点的数据，条件是状态和2020-08-04日期格式的条件查询，查询04号当天的所有数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">LocalDate localDateTime &#x3D; LocalDate.parse(params.getPaymentCompleteTime());</span><br><span class="line">LocalDateTime time &#x3D; localDateTime.atStartofDay();</span><br><span class="line"></span><br><span class="line">LocalDateTime minDate &#x3D; time.of(time.toLocalDate(),LocalTime.MIN);</span><br><span class="line">LocalDateTime maxDate &#x3D; time.of(time.toLocalDate(),LocalTime.MAX);</span><br><span class="line"></span><br><span class="line">List&lt;RechargeOrder&gt; rechargeOrderList &#x3D; this.list(new LambdaQueryWrapper&lt;RechargeOrder&gt;()</span><br><span class="line">   .eq(RechargeOrder::getStatus,params.getStatus)</span><br><span class="line">   .gt(RechargeOrder::getPaymentComleteTime,minDate)</span><br><span class="line">   .lt(RechargeOrder::getPaymentComleteTime,maxDate);</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-校验String类型是否为空"><a href="#7-校验String类型是否为空" class="headerlink" title="7:) 校验String类型是否为空"></a>7:) 校验String类型是否为空</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String updateStatus &#x3D; table.get(row,14);</span><br><span class="line">if(updateStatus &#x3D;&#x3D; null || updateStatus.length()&lt;&#x3D;0)&#123;</span><br><span class="line">    throw new ServiceException(ResultCode.NO_DATA_EXIST.getCode());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-时间日期的格式化"><a href="#8-时间日期的格式化" class="headerlink" title="8:) 时间日期的格式化"></a>8:) 时间日期的格式化</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime time;</span><br><span class="line">DateTimeFormatter df &#x3D; DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span><br><span class="line">String time &#x3D; df.format(time);</span><br></pre></td></tr></table></figure>
+
+<h5 id="9-Java中三目运算符的实战应用"><a href="#9-Java中三目运算符的实战应用" class="headerlink" title="9:) Java中三目运算符的实战应用"></a>9:) Java中三目运算符的实战应用</h5><p>工作中遇到的情况：<br>在导出Excle文件时，会遇到数据为空的时候，这时如果有个Integer类型的数据需要转换成String类型的，就需要使用.toString()方法，这样数据为空就会报空指针异常。<br>解决这种类似的问题，就是在空的属性里放一个空的字符串。<br>判断这个属性为不为null   如果为真就取   “”  ，为假就取到实际值。可以用三目运算符来解决。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">excelTable.put(row, 4, item.getBatchCode() &#x3D;&#x3D; null ? &quot;&quot; : item.getBatchCode());</span><br></pre></td></tr></table></figure>
+
+<h5 id="10-数据库中的默认值"><a href="#10-数据库中的默认值" class="headerlink" title="10:) 数据库中的默认值"></a>10:) 数据库中的默认值</h5><p>Mysql数据库在创建新的字段时，要确定好是否需要添加上默认值，如果不加上默认值，在生产环境中该字段会出现空指针异常。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table tap_agent add monthly_limit bigint default 0 null comment &#39;商户月额度，分&#39; after remain_amount</span><br></pre></td></tr></table></figure>
+
+<h5 id="11-数据库中得到字段类型"><a href="#11-数据库中得到字段类型" class="headerlink" title="11:) 数据库中得到字段类型"></a>11:) 数据库中得到字段类型</h5><ul>
+<li>当使用到金额字段时Mysql数据库中使用的是bigint(20)，实体类中使用的是Long类型。</li>
+<li>当使用到时间类型的时候在Mysql数据库中使用的是dateTime类型，而实体类中使用的是java time包下的LocalDateTime；</li>
+</ul>
+<h5 id="12-在mapper-xml文件中引用SQL"><a href="#12-在mapper-xml文件中引用SQL" class="headerlink" title="12:) 在mapper.xml文件中引用SQL"></a>12:) 在mapper.xml文件中引用SQL</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id &#x3D;&quot;temporaryStockInfoPage&quot; resultType &#x3D;&quot;com.eveus.pss.gantry.po.TemporaryStockInfo&quot;&gt;</span><br><span class="line">    &lt;include refid &#x3D;&#39;temporaryStockInfoSql&#39;&gt;&lt;&#x2F;include&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="13-BigDecimal类型的值四舍五入保留小数点后两位"><a href="#13-BigDecimal类型的值四舍五入保留小数点后两位" class="headerlink" title="13:) BigDecimal类型的值四舍五入保留小数点后两位"></a>13:) BigDecimal类型的值四舍五入保留小数点后两位</h5><p>例: 0.663429068924</p>
+<p>处理后: 0.67</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal sumTorsion &#x3D;item.getSumTorsion;</span><br><span class="line">BigDecimal bigDecimal &#x3D;sumTorsion.setScale(2,BigDecimal.ROUND_HALF_UP);</span><br><span class="line">String str &#x3D;bigDecimal.toString();</span><br></pre></td></tr></table></figure>
+
+<h5 id="14-Double类型的转成String类型的，并且保留一位小数"><a href="#14-Double类型的转成String类型的，并且保留一位小数" class="headerlink" title="14:) Double类型的转成String类型的，并且保留一位小数"></a>14:) Double类型的转成String类型的，并且保留一位小数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Double d &#x3D;item.getNetWeight();</span><br><span class="line">String str &#x3D;String format(&quot;%.1f&quot;,d);</span><br></pre></td></tr></table></figure>
+
+<p><label style="color:pink">注：%.if   %.表示小数点任意的位数，1表示一位小数，格式后的结果为f，表示浮点型。保留两位小数时同理。<br></label></p>
+
+      
+<!-- 增加版权声明 -->
+
+
+
+  <div class="declare">
+    <strong>本文作者：</strong>
+    
+      AndyFung
+    
+    <br>
+    <strong>本文链接：</strong>
+    <a rel="license" href="http://yoursite.com/2020/08/24/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">http://yoursite.com/2020/08/24/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</a>
+    <br>
+    <strong>版权声明：</strong>
+    本作品采用
+    <a rel="license noopener" href="https://andyfung026.github.io/" target="_blank"></a>
+    进行许可。转载请注明出处！
+    
+  </div>
+
+
+<!-- 增加版权声明结束 -->
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/picture/img/WechatIMG.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -196,133 +297,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/08/24/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/10/Linux%E5%AE%B6%E5%B8%B8%E8%8F%9C/" class="archive-article-date">
-  	<time datetime="2020-08-10T13:39:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-10</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/10/Linux%E5%AE%B6%E5%B8%B8%E8%8F%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux家常菜</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/10/Linux%E5%AE%B6%E5%B8%B8%E8%8F%9C/">Linux家常菜</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">耐得住性子学习Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/10/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-08-10T13:39:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/10/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">工作总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">记录工作中遇到的知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/27/JAVA%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-07-27T15:03:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/27/JAVA%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">一切皆对象</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JAVA基本知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -347,8 +421,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
